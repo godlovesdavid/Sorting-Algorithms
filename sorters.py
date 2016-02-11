@@ -223,9 +223,9 @@ def insertionsort(lst): #n best, n2 average/worst, 1 memory
 
     #for every element, insert it into the correct position of everything previous by "bubbling" it down
     for elemidx in range(1, len(newlist)):
-        for i in range(elemidx):
-            if newlist[elemidx] < newlist[i]:
-                swap(elemidx, i)
+        for i in range(elemidx, 0, -1):
+            if newlist[i] < newlist[i - 1]:
+                swap(i, i-1)
 
     return newlist
 
@@ -247,7 +247,7 @@ def selectionsort(lst): #n2 best/average/worst, 1 memory
     return sorted
 
 
-l = [152, 122, 321, 222, 521]
+l = [142, 196, 21, 138, 520]
 
 shuffle(l)
 print('quicksort', l, quicksort(l))
