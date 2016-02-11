@@ -139,15 +139,15 @@ def bubblesort(lst):  # n best, n2 average/worst, 1 memory
     return newlist
 
 
-def treesort(lst):
-    listcopy = lst.copy()
+def treesort(lst): #n log n best/average, n2 worst
+    newlist = lst.copy()
 
     # put all in a binary tree where left child is less than parent and right child is greater
-    tree = [None for count in range(2 ** (len(listcopy) + 1))]
-    randomidx = randint(0, len(listcopy) - 1)
-    tree[0] = listcopy[randomidx]  # root = random element
-    del listcopy[randomidx]
-    for e in listcopy:
+    tree = [None for count in range(2 ** (len(newlist) + 1))]
+    randomidx = randint(0, len(newlist) - 1)
+    tree[0] = newlist[randomidx]  # root = random element
+    del newlist[randomidx]
+    for e in newlist:
         parenti = 0
         while tree[parenti] is not None:
             lefti = parenti * 2 + 1
@@ -182,7 +182,7 @@ def treesort(lst):
     return sorted
 
 
-def radixsort(lst):
+def radixsort(lst): #nk best/average/worst, n+k memory
     def digitat(idx, num):
         return num % 10 ** (idx + 1) // 10 ** idx
 
@@ -210,6 +210,43 @@ def radixsort(lst):
     return newlist
 
 
+def insertionsort(lst): #n best, n2 average/worst, 1 memory
+    if len(lst) < 2:
+        return lst
+
+    newlist = lst.copy()
+
+    def swap(i1, i2):
+        temp = newlist[i1]
+        newlist[i1] = newlist[i2]
+        newlist[i2] = temp
+
+    #for every element, insert it into the correct position of everything previous by "bubbling" it down
+    for elemidx in range(1, len(newlist)):
+        for i in range(elemidx):
+            if newlist[elemidx] < newlist[i]:
+                swap(elemidx, i)
+
+    return newlist
+
+
+def selectionsort(lst): #n2 best/average/worst, 1 memory
+    newlist = lst.copy()
+    sorted = []
+
+    #get smallest, repeat and repeat and repeat.
+    while len(newlist):
+        smallest = newlist[0]
+        for e in newlist:
+            if e < smallest:
+                smallest = e
+
+        sorted.append(smallest)
+        newlist.remove(smallest)
+
+    return sorted
+
+
 l = [152, 122, 321, 222, 521]
 
 shuffle(l)
@@ -229,3 +266,9 @@ print('treesort', l, treesort(l))
 
 shuffle(l)
 print('radixsort', l, radixsort(l))
+
+shuffle(l)
+print('insertionsort', l, insertionsort(l))
+
+shuffle(l)
+print('selectionsort', l, selectionsort(l))
