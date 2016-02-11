@@ -1,6 +1,6 @@
 from random import shuffle, randint
 
-
+#quicksort: get random element, put all smaller to left and larger to right, repeat for those two groups.
 def quicksort(lst):  # n log n best/average, n2 worst, log n memory
     if len(lst) < 2:
         return lst
@@ -17,7 +17,7 @@ def quicksort(lst):  # n log n best/average, n2 worst, log n memory
     # repeat for those 2 new groups
     return quicksort(left) + [pivot] + quicksort(right)
 
-
+#mergesort: divide in half, sort halves, merge together into sorted final
 def mergesort(lst):  # n log n best/average/worst, n memory
     if len(lst) < 2:
         return lst
@@ -49,7 +49,7 @@ def mergesort(lst):  # n log n best/average/worst, n memory
 
     return sorted
 
-
+#heapsort: treat as binary tree, make parent nodes smaller than their children, continually take out root + put last in its place + sift it down
 def heapsort(lst):  # n log n best/average/worst, 1 memory
     if len(lst) < 2:
         return lst
@@ -61,7 +61,7 @@ def heapsort(lst):  # n log n best/average/worst, 1 memory
         tree[i1] = tree[i2]
         tree[i2] = temp
 
-    # make parent nodes smaller than children
+    # min heapify: make parent nodes smaller than children
     def heapify():
         reheap = False
         for parenti in range(len(tree)):
@@ -118,11 +118,11 @@ def heapsort(lst):  # n log n best/average/worst, 1 memory
 
     return sorted
 
-
+#bubblesort: swap the smaller of every pair.
 def bubblesort(lst):  # n best, n2 average/worst, 1 memory
     newlist = lst.copy()
 
-    # for every 2 elements, shuft the smaller one up
+    # for every 2 elements, shift the smaller one up
     issorted = True
     for i in range(len(newlist)):
         nexti = i + 1
@@ -138,11 +138,11 @@ def bubblesort(lst):  # n best, n2 average/worst, 1 memory
 
     return newlist
 
-
+#treesort: put all in binary tree with left being less than and right being greater, then traverse by going all the way left then all the way right
 def treesort(lst): #n log n best/average, n2 worst
     newlist = lst.copy()
 
-    # put all in a binary tree where left child is less than parent and right child is greater
+    # put all in binary tree, ordered correctly
     tree = [None for count in range(2 ** (len(newlist) + 1))]
     randomidx = randint(0, len(newlist) - 1)
     tree[0] = newlist[randomidx]  # root = random element
@@ -181,7 +181,7 @@ def treesort(lst): #n log n best/average, n2 worst
     traverse(0)
     return sorted
 
-
+#radix sort: from last digit to first, put numbers in bucket index and reorder them.
 def radixsort(lst): #nk best/average/worst, n+k memory
     def digitat(idx, num):
         return num % 10 ** (idx + 1) // 10 ** idx
@@ -209,7 +209,7 @@ def radixsort(lst): #nk best/average/worst, n+k memory
 
     return newlist
 
-
+#insertion sort: for every element, insert it into the correct position of everything previous by "bubbling" it down
 def insertionsort(lst): #n best, n2 average/worst, 1 memory
     if len(lst) < 2:
         return lst
@@ -221,7 +221,7 @@ def insertionsort(lst): #n best, n2 average/worst, 1 memory
         newlist[i1] = newlist[i2]
         newlist[i2] = temp
 
-    #for every element, insert it into the correct position of everything previous by "bubbling" it down
+    #bubble down new elements
     for elemidx in range(1, len(newlist)):
         for i in range(elemidx, 0, -1):
             if newlist[i] < newlist[i - 1]:
@@ -229,12 +229,12 @@ def insertionsort(lst): #n best, n2 average/worst, 1 memory
 
     return newlist
 
-
+#selection sort: get smallest number, repeat and repeat and repeat.
 def selectionsort(lst): #n2 best/average/worst, 1 memory
     newlist = lst.copy()
     sorted = []
 
-    #get smallest, repeat and repeat and repeat.
+    #keep moving smallest number into new list.
     while len(newlist):
         smallest = newlist[0]
         for e in newlist:
